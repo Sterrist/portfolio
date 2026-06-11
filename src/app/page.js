@@ -143,6 +143,11 @@ export default function Page() {
               <b>Портфолио</b>
               <span>Вы кстати сейчас смотрите на него</span>
             </a>
+
+            <a className={styles.portfolio_item} href="https://github.com/Sterrist/OdysseyDashboard" rel="noopener noreferrer" target="_blank">
+              <b>OdysseyDashboard</b>
+              <span>Замена Homer</span>
+            </a>
           </div>
 
           <h4>SCRIPTS</h4>
