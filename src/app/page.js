@@ -97,7 +97,7 @@ export default function Page() {
             Люблю{' '}
             <a
               className="link"
-              href="https://ru.wikipedia.org/wiki/Панна-котта"
+              href="https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BD%D1%8C%D0%B3%D0%B8"
               rel="noopener noreferrer"
               target="_blank"
             >
