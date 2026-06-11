@@ -1,12 +1,19 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+html {
+  min-height: 100%;
   background: #383838;
 }
 
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #383838;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 *, *::before, *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -15,7 +22,7 @@ body, html {
   color: #78db99;
   text-decoration: none;
   position: relative;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .link::after {
@@ -23,7 +30,7 @@ body, html {
   position: absolute;
   width: 100%;
   height: 3px;
-  bottom: 0;
+  bottom: -2px;
   right: 0;
   background-color: #78db99;
   transform: scaleX(0);

@@ -6,8 +6,8 @@ const unbounded = Unbounded({
 })
 
 export const metadata = {
-  title: 'STERRIST — ' + ['CODING?', 'DEVELOPMENT?', 'GAMES?', 'SCAM?', 'BUSINESS?', 'MAKE MONEY?', 'MAKE LIFE EASY?'][Math.floor(Math.random() * 7)],
-  description: 'Разработчик который разрабатывает :)'
+  title: 'STERRIST — ' + ['CODING?', 'DEVELOPMENT?', 'BUSINESS?', 'MAKE MONEY?'][Math.floor(Math.random() * 7)],
+  description: 'Разработчик который разрабатывает, а не "кодит"'
 }
 
 export default function RootLayout({ children }) {
