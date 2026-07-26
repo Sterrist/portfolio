@@ -1,237 +1,197 @@
-'use client'
-
-import { useEffect, useRef, useState } from 'react';
+import AudioPlayer from './AudioPlayer'
+import ThemeToggle from './ThemeToggle'
 import styles from './page.module.css'
 
+const projects = [
+  {
+    title: 'Corrector BOT',
+    category: 'Telegram / AI',
+    description: 'Исправляет грамматику, орфографию и тон исходящих сообщений с помощью OpenAI API.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/correctorbot' }],
+  },
+  {
+    title: 'Charm — Moder',
+    category: 'Telegram',
+    description: 'Бот-модератор для Telegram-чатов.',
+    links: [{ label: 'Telegram', href: 'https://t.me/charmmoder_bot' }],
+  },
+  {
+    title: 'Metro 2039',
+    category: 'Web / Media',
+    description: 'Лендинг и новостной проект о вселенной Metro.',
+    links: [
+      { label: 'Сайт', href: 'https://metro2039.ru' },
+      { label: 'GitHub', href: 'https://github.com/metro2039/lending' },
+      { label: 'Telegram', href: 'https://t.me/m39ru' },
+    ],
+  },
+  {
+    title: 'TG Mailing BOT',
+    category: 'Telegram',
+    description: 'Инструмент рассылки по группам от имени Telegram-аккаунта.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/tg-mailing-bot' }],
+  },
+  {
+    title: 'Odyssey Dashboard',
+    category: 'Web',
+    description: 'Современная замена Homer для удобного доступа к сервисам.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/OdysseyDashboard' }],
+  },
+  {
+    title: 'IKEA Parser',
+    category: 'Python / Data',
+    description: 'Парсер каталога товаров IKEA.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/ikeaparser' }],
+  },
+  {
+    title: 'Fragment Parser',
+    category: 'Python / Data',
+    description: 'Парсер подарков с Fragment.com.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/fragmentparser' }],
+  },
+  {
+    title: 'TODO List',
+    category: 'Kotlin / Mobile',
+    description: 'Нативный список задач для Android.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/TODO-List' }],
+  },
+  {
+    title: 'SMS Forwarder',
+    category: 'Kotlin / Mobile',
+    description: 'Пересылает SMS с телефона в Telegram.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/SMSForwarder' }],
+  },
+  {
+    title: 'AHKNS',
+    category: 'Desktop',
+    description: 'Открытая современная замена устаревшим биндерам.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/AHKNS' }],
+  },
+]
+
+const skills = ['BACKEND', 'TELEGRAM', 'FRONTEND', 'AUTOMATION', 'AI TOOLS']
+
 export default function Page() {
-  const audioRef = useRef(null);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [animateTitle, setAnimateTitle] = useState(false);
-  const [animateHello, setAnimateHello] = useState(false);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => setCurrentTime(audio.currentTime);
-
-    const updateDuration = () => {
-      if (!Number.isNaN(audio.duration)) {
-        setDuration(audio.duration);
-      }
-    };
-
-    const handleEnd = () => {
-      audio.currentTime = 0;
-      setIsPlaying(false);
-    };
-
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('durationchange', updateDuration);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnd);
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-
-    updateDuration();
-
-    setAnimateTitle(true);
-    const timer = setTimeout(() => setAnimateHello(true), 500);
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('durationchange', updateDuration);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnd);
-      audio.removeEventListener('play', handlePlay);
-      audio.removeEventListener('pause', handlePause);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  const togglePlay = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-      return;
-    }
-
-    try {
-      await audio.play();
-    } catch (error) {
-      console.error('Не удалось запустить аудио:', error);
-    }
-  };
-
-  const formatTime = (seconds) => {
-    const safeSeconds = Number.isFinite(seconds) ? seconds : 0;
-    const minutes = Math.floor(safeSeconds / 60);
-    const secs = Math.floor(safeSeconds % 60);
-
-    return `${minutes}:${secs.toString().padStart(2, '0')}`;
-  };
-
   return (
-    <div className={styles.container}>
-      <section className={styles.top}>
-        <div className={`${styles.top_title} ${animateTitle ? styles.visible : ''}`}>
-          <h1>STERRIST DEV</h1>
-          <h2>МНОГО КОДА</h2>
-          <h3>ЩЕПОТКУ ДИЗАЙНА</h3>
-          <h4>ЧУТЬ ЧУТЬ БАГОВ (ФИШЕК)</h4>
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <a className={styles.logo} href="#top" aria-label="Sterrist — наверх">
+          Sterrist
+        </a>
+
+        <div className={styles.headerActions}>
+          <nav className={styles.nav} aria-label="Основная навигация">
+            <a href="#work">Проекты</a>
+            <a href="#about">Обо мне</a>
+            <a href="#contact">Контакты</a>
+          </nav>
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <section className={styles.hero} id="top">
+        <h1 className={styles.heroTitle}>
+          ПИШУ КОД,
+          <br />
+          КОТОРЫЙ <span>РАБОТАЕТ</span>
+        </h1>
+
+        <div className={styles.heroBottom}>
+          <p>
+            Привет, я Sterrist. Делаю бэкенд, ботов и веб — от первой идеи до работающего продукта.
+          </p>
+
+          <a className={styles.heroCta} href="#work">
+            <span>Смотреть работы</span>
+            <span className={styles.ctaArrow} aria-hidden="true">↓</span>
+          </a>
         </div>
 
-        <div className={`${styles.top_hello} ${animateHello ? styles.visible : ''}`}>
-          <h1>Привет, %NAME%!</h1>
-          <h4>Меня зовут STERRIST, пишу код, пью чай и иногда сплю</h4>
-          <h4>Делаю бек, ботов и фронт</h4>
-          <h4>
-            Люблю{' '}
-            <a
-              className="link"
-              href="https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BD%D1%8C%D0%B3%D0%B8"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              деньги
-            </a>
-          </h4>
-          <h5>Пролистай ниже немного</h5>
+        <div className={styles.skillRow} aria-label="Специализация">
+          {skills.map((skill, index) => (
+            <span key={skill} className={index === skills.length - 1 ? styles.skillAccent : ''}>
+              {skill}
+            </span>
+          ))}
         </div>
       </section>
 
-      <section className={styles.bottom}>
-        <h1 className={styles.sectionTitle}>Портфолио</h1>
+      <section className={styles.work} id="work">
+        <div className={styles.sectionHeading}>
+          <p className={styles.sectionIndex}>01 / ИЗБРАННОЕ</p>
+          <h2>ПРОЕКТЫ</h2>
+          <p className={styles.projectCount}>{String(projects.length).padStart(2, '0')} работ</p>
+        </div>
 
-        <div className={styles.portfolio}>
-          <h4>TELEGRAM</h4>
+        <div className={styles.projectGrid}>
+          {projects.map((project, index) => (
+            <article className={styles.projectCard} key={project.title}>
+              <div className={styles.cardTop}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <span className={styles.cardArrow} aria-hidden="true">↗</span>
+              </div>
+              <div className={styles.cardContent}>
+                <p>{project.category}</p>
+                <h3>{project.title}</h3>
+                <span>{project.description}</span>
+                <div className={styles.projectActions} aria-label={`Ссылки проекта ${project.title}`}>
+                  {project.links.map((link) => (
+                    <a
+                      className={styles.projectLink}
+                      href={link.href}
+                      key={link.label}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {link.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-          <div className={styles.portfolio_items}>
-            <a className={styles.portfolio_item} href="https://t.me/charmmoder_bot" rel="noopener noreferrer" target="_blank">
-              <b>CHARM — MODER</b>
-              <span>Бот-модератор для Telegram чатов</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://t.me/m39ru" rel="noopener noreferrer" target="_blank">
-              <b>Metro 2039</b>
-              <span>Новостной паблик про серию книг и игр Metro</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/tg-mailing-bot" rel="noopener noreferrer" target="_blank">
-              <b>TG Mailing BOT</b>
-              <span>Бот-рассыльщик для Telegram аккаунта (по группам)</span>
-            </a>
-          </div>
-
-          <h4>WEB</h4>
-
-          <div className={styles.portfolio_items}>
-            <a className={styles.portfolio_item} href="https://metro2039.ru" rel="noopener noreferrer" target="_blank">
-              <b>Metro 2039</b>
-              <span>Лендинг для новостного паблика @m39ru</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/portfolio" rel="noopener noreferrer" target="_blank">
-              <b>Портфолио</b>
-              <span>Вы кстати сейчас смотрите на него</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/OdysseyDashboard" rel="noopener noreferrer" target="_blank">
-              <b>OdysseyDashboard</b>
-              <span>Замена Homer</span>
-            </a>
-          </div>
-
-          <h4>SCRIPTS</h4>
-
-          <div className={styles.portfolio_items}>
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/ikeaparser" rel="noopener noreferrer" target="_blank">
-              <b>ikeaparser</b>
-              <span>Парсер всех (почти) товаров с IKEA</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/fragmentparser" rel="noopener noreferrer" target="_blank">
-              <b>FRAGMENT PARSER</b>
-              <span>Парсер подарков с fragment.com</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/simpleclutchcalculation" rel="noopener noreferrer" target="_blank">
-              <b>SIMPLE CLUTCH CALCULATION</b>
-              <span>Расчет шанса легендарного клатча s1mple на Cache</span>
-            </a>
-          </div>
-
-          <h4>MOBILE</h4>
-
-          <div className={styles.portfolio_items}>
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/TODO-List" rel="noopener noreferrer" target="_blank">
-              <b>TODO-LIST</b>
-              <span>Список задач на Kotlin</span>
-            </a>
-
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/SMSForwarder" rel="noopener noreferrer" target="_blank">
-              <b>SMSForwarder</b>
-              <span>Пересыльщик SMS с телефона в Telegram</span>
-            </a>
-          </div>
-
-          <h4>DESKTOP</h4>
-
-          <div className={styles.portfolio_items}>
-            <a className={styles.portfolio_item} href="https://github.com/Sterrist/AHKNS" rel="noopener noreferrer" target="_blank">
-              <b>AHKNS</b>
-              <span>Современная, открытая замена устаревшим биндерам</span>
-            </a>
+      <section className={styles.about} id="about">
+        <p className={styles.sectionIndex}>02 / ОБО МНЕ</p>
+        <div className={styles.aboutGrid}>
+          <h2>
+            МНОГО КОДА.
+            <br />
+            ЩЕПОТКА ДИЗАЙНА.
+          </h2>
+          <div className={styles.aboutCopy}>
+            <p>
+              Собираю практичные продукты: продумываю логику, пишу код и довожу интерфейс до состояния, когда им приятно пользоваться.
+            </p>
+            <p>
+              Люблю автоматизацию, Telegram, Python и задачи, в которых можно убрать десять ручных действий одним хорошим скриптом.
+            </p>
           </div>
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <h1>Контакты</h1>
+      <footer className={styles.footer} id="contact">
+        <p className={styles.sectionIndex}>03 / КОНТАКТЫ</p>
+        <h2>ЕСТЬ ЗАДАЧА?</h2>
+        <a className={styles.contactLink} href="https://t.me/sterrist_dev" rel="noopener noreferrer" target="_blank">
+          НАПИСАТЬ В TELEGRAM <span aria-hidden="true">↗</span>
+        </a>
+        <a className={styles.contactLink} href="mailto:sterrist@sterrist.dev">
+          sterrist@sterrist.dev <span aria-hidden="true">↗</span>
+        </a>
 
-        <div className={styles.footer_links}>
-          <a className="link" href="https://t.me/sterrist_dev" rel="noopener noreferrer" target="_blank">
-            <b>TELEGRAM</b>
-          </a>
-
-          <a className="link" href="https://vk.com/sterrist" rel="noopener noreferrer" target="_blank">
-            <b>VK</b>
-          </a>
-
-          <a className="link" href="https://github.com/Sterrist" rel="noopener noreferrer" target="_blank">
-            <b>GITHUB</b>
-          </a>
+        <div className={styles.footerBottom}>
+          <p>Sterrist © {new Date().getFullYear()}</p>
+          <div>
+            <a href="https://github.com/Sterrist" rel="noopener noreferrer" target="_blank">GITHUB</a>
+            <a href="https://vk.com/sterrist" rel="noopener noreferrer" target="_blank">VK</a>
+          </div>
         </div>
       </footer>
 
-      <div className={styles.player}>
-        <audio ref={audioRef} src="/music.mp3" />
-
-        <div className={styles.playerControls}>
-          <button className={styles.playButton} onClick={togglePlay} aria-label={isPlaying ? 'Пауза' : 'Играть'}>
-            <img
-              src={isPlaying ? '/pause.png' : '/play.png'}
-              alt=""
-              width={24}
-              height={24}
-            />
-          </button>
-
-          <div className={styles.timeDisplay}>
-            <span>{formatTime(currentTime)}</span>
-            <span>/</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      <AudioPlayer />
+    </main>
   )
 }
