@@ -1,36 +1,41 @@
-FROM node:20-alpine AS deps
+# syntax=docker/dockerfile:1
+
+FROM node:20-alpine AS base
+
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+FROM base AS deps
+
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --no-audit --no-fund
 
-FROM node:20-alpine AS builder
-WORKDIR /app
+FROM base AS builder
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
-FROM node:20-alpine AS runner
-WORKDIR /app
+FROM base AS runner
 
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 --ingroup nodejs nextjs
 
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 3000
-
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
 CMD ["node", "server.js"]
