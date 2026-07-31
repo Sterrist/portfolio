@@ -4,6 +4,12 @@ import styles from './page.module.css'
 
 const projects = [
   {
+    title: 'CHARM PROJECT',
+    category: 'Frontend / Backend / Telegram / Python',
+    description: 'Сервис продажи VPN, запущенный в тестовом режиме. Оплата доступна только тестовой криптовалютой через Crypto Bot Testnet.',
+    links: [{ label: 'Сайт', href: 'https://charmproject.demo.nordu.cc' }],
+  },
+  {
     title: 'Corrector BOT',
     category: 'Telegram / AI',
     description: 'Исправляет грамматику, орфографию и тон исходящих сообщений с помощью OpenAI API.',
