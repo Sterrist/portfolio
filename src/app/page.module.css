@@ -9,14 +9,23 @@
   --hero-fg: var(--paper);
   --hero-accent: var(--lavender);
   --hero-ring: rgba(230, 211, 228, 0.22);
-  --work-bg: var(--lavender);
-  --work-fg: var(--ink);
-  --about-bg: var(--paper);
-  --about-fg: var(--ink);
+  --work-bg: #151215;
+  --work-fg: var(--paper);
+  --about-bg: #1d181c;
+  --about-fg: var(--paper);
   --footer-bg: var(--ink);
   --footer-fg: var(--paper);
-  --card-bg: rgba(255, 255, 255, 0.18);
-  --card-border: rgba(13, 13, 13, 0.16);
+  --card-bg: rgba(242, 237, 241, 0.04);
+  --card-border: rgba(242, 237, 241, 0.14);
+  --card-fg: var(--paper);
+  --card-solid-bg: var(--lavender);
+  --card-solid-fg: var(--ink);
+  --card-hover-bg: var(--lavender);
+  --card-hover-fg: var(--ink);
+  --card-hover-solid-bg: var(--ink);
+  --card-hover-solid-fg: var(--paper);
+  --card-link-hover-bg: var(--clay);
+  --card-link-hover-fg: var(--paper);
   --footer-line: rgba(242, 237, 241, 0.3);
   min-height: 100vh;
   overflow: hidden;
@@ -43,6 +52,15 @@
   --footer-fg: #171317;
   --card-bg: rgba(255, 255, 255, 0.34);
   --card-border: rgba(23, 19, 23, 0.18);
+  --card-fg: var(--ink);
+  --card-solid-bg: var(--ink);
+  --card-solid-fg: var(--paper);
+  --card-hover-bg: var(--ink);
+  --card-hover-fg: var(--paper);
+  --card-hover-solid-bg: var(--lavender);
+  --card-hover-solid-fg: var(--ink);
+  --card-link-hover-bg: var(--paper);
+  --card-link-hover-fg: var(--ink);
   --footer-line: rgba(23, 19, 23, 0.24);
 }
 
@@ -315,15 +333,15 @@
   border: 1px solid var(--card-border);
   border-radius: clamp(36px, 5vw, 76px);
   background: var(--card-bg);
-  color: var(--ink);
+  color: var(--card-fg);
   padding: clamp(22px, 2.6vw, 42px);
   text-decoration: none;
   transition: background 220ms ease, color 220ms ease, transform 220ms ease;
 }
 
 .projectCard:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--card-hover-bg);
+  color: var(--card-hover-fg);
   transform: translateY(-6px);
 }
 
@@ -342,16 +360,16 @@
   height: 52px;
   place-items: center;
   border-radius: 50%;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--card-solid-bg);
+  color: var(--card-solid-fg);
   font-family: sans-serif;
   font-size: 22px;
   transition: transform 220ms ease;
 }
 
 .projectCard:hover .cardArrow {
-  background: var(--lavender);
-  color: var(--ink);
+  background: var(--card-hover-solid-bg);
+  color: var(--card-hover-solid-fg);
 }
 
 .projectCard:hover .cardArrow {
@@ -403,10 +421,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--card-solid-bg);
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--card-solid-bg);
+  color: var(--card-solid-fg);
   padding: 0 17px;
   font-family: var(--font-mono), monospace;
   font-size: 9px;
@@ -427,13 +445,14 @@
 }
 
 .projectCard:hover .projectLink {
-  border-color: var(--lavender);
-  background: var(--lavender);
-  color: var(--ink);
+  border-color: var(--card-hover-solid-bg);
+  background: var(--card-hover-solid-bg);
+  color: var(--card-hover-solid-fg);
 }
 
 .projectCard:hover .projectLink:hover {
-  background: var(--paper);
+  background: var(--card-link-hover-bg);
+  color: var(--card-link-hover-fg);
 }
 
 .about {
@@ -879,20 +898,20 @@
 @media (hover: none) {
   .projectCard:hover {
     background: var(--card-bg);
-    color: var(--ink);
+    color: var(--card-fg);
     transform: none;
   }
 
   .projectCard:hover .cardArrow {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--card-solid-bg);
+    color: var(--card-solid-fg);
     transform: none;
   }
 
   .projectCard:hover .projectLink {
-    border-color: var(--ink);
-    background: var(--ink);
-    color: var(--paper);
+    border-color: var(--card-solid-bg);
+    background: var(--card-solid-bg);
+    color: var(--card-solid-fg);
   }
 
   .projectLink:hover {

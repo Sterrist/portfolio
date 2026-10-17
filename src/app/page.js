@@ -4,10 +4,10 @@ import styles from './page.module.css'
 
 const projects = [
   {
-    title: 'CHARM PROJECT',
-    category: 'Frontend / Backend / Telegram / Python',
-    description: 'Сервис продажи VPN, запущенный в тестовом режиме. Оплата доступна только тестовой криптовалютой через Crypto Bot Testnet.',
-    links: [{ label: 'Сайт', href: 'https://charmproject.demo.nordu.cc' }],
+    title: 'OpenFat',
+    category: 'Kotlin / Mobile',
+    description: 'Простой и открытый дневник калорий, БЖУ и веса для Android. Без аккаунтов, рекламы и облака.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/OpenFat' }],
   },
   {
     title: 'Corrector BOT',
@@ -27,7 +27,6 @@ const projects = [
     description: 'Лендинг и новостной проект о вселенной Metro.',
     links: [
       { label: 'Сайт', href: 'https://metro2039.ru' },
-      { label: 'GitHub', href: 'https://github.com/metro2039/lending' },
       { label: 'Telegram', href: 'https://t.me/m39ru' },
     ],
   },
@@ -36,12 +35,6 @@ const projects = [
     category: 'Telegram',
     description: 'Инструмент рассылки по группам от имени Telegram-аккаунта.',
     links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/tg-mailing-bot' }],
-  },
-  {
-    title: 'Odyssey Dashboard',
-    category: 'Web',
-    description: 'Современная замена Homer для удобного доступа к сервисам.',
-    links: [{ label: 'GitHub', href: 'https://github.com/Sterrist/OdysseyDashboard' }],
   },
   {
     title: 'IKEA Parser',
