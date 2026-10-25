@@ -70,9 +70,43 @@ const projects = [
 
 const skills = ['BACKEND', 'TELEGRAM', 'FRONTEND', 'AUTOMATION', 'AI TOOLS']
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.NODE_ENV === 'production' ? 'https://sterrist.dev' : 'http://localhost:3000')
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Sterrist',
+      inLanguage: 'ru',
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: 'Sterrist',
+      url: siteUrl,
+      image: `${siteUrl}/avatar.jpg`,
+      email: 'mailto:sterrist@sterrist.dev',
+      jobTitle: 'Разработчик',
+      description: 'Разработчик Telegram-ботов, бэкенда и веб-продуктов.',
+      knowsAbout: ['Telegram-боты', 'Python', 'Kotlin', 'Backend', 'Frontend', 'Автоматизация'],
+      sameAs: ['https://github.com/Sterrist', 'https://vk.com/sterrist', 'https://t.me/sterrist_dev'],
+    },
+  ],
+}
+
 export default function Page() {
   return (
     <main className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+      />
       <header className={styles.header}>
         <a className={styles.logo} href="#top" aria-label="Sterrist — наверх">
           Sterrist
