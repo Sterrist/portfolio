@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
     <html lang="ru" className={`${unbounded.variable} ${plexMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script defer src="https://umami.sterrist.dev/script.js" data-website-id="f8835a0d-1fe9-49da-a1c4-fe75c27e3918" />
       </head>
       <body className={unbounded.className}>{children}</body>
     </html>
